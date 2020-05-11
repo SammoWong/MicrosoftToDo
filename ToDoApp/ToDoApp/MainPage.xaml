@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:vc="clr-namespace:ToDoApp.Converter"
+             x:Class="ToDoApp.MainPage">
+
+    <ContentPage.Resources>
+        <vc:ValueDisplayConverter x:Key="vdc"></vc:ValueDisplayConverter>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="205" />
+            <RowDefinition/>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackLayout Orientation="Horizontal">
+            <Image Source="logo.png" Margin="5"/>
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Label Text="Sammo" FontAttributes="Bold" FontSize="15"/>
+                <Label Text="sammo.wong@outlook.com" FontSize="14"/>
+            </StackLayout>
+
+            <Button Text="&#xe638;" FontFamily="iconfont.ttf#" FontSize="25" BackgroundColor="Transparent" TextColor="Blue" 
+                    HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" WidthRequest="50" Margin="0,0,5,0"></Button>
+        </StackLayout>
+
+        <ListView Grid.Row="1" RowHeight="40" ItemsSource="{Binding MenuModels}" 
+                  SelectionMode="None"
+                  SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding IconFont}" TextColor="{Binding BackColor}" Margin="5" VerticalOptions="Center" FontFamily="iconfont.ttf#" FontSize="22" FontAttributes="Bold"></Label>
+                                <Label Text="{Binding Title}" FontAttributes="Bold" VerticalOptions="Center"></Label>
+                            </StackLayout>
+                            <Label Grid.Column="1" Text="{Binding TaskInfos.Count, Converter={StaticResource vdc}}" HorizontalOptions="EndAndExpand" 
+                                   Margin="0,0,15,0"></Label>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView Grid.Row="2" RowHeight="40" ItemsSource="{Binding MenuSubModels}" 
+                  SelectionMode="None"
+                  SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="&#xe63b;" Margin="5" VerticalOptions="Center" FontFamily="iconfont.ttf#" FontSize="22" FontAttributes="Bold"></Label>
+                                <Label Text="{Binding Title}" FontAttributes="Bold" VerticalOptions="Center"></Label>
+                            </StackLayout>
+                            <Label Grid.Column="1" Text="{Binding TaskInfos.Count, Converter={StaticResource vdc}}" HorizontalOptions="EndAndExpand" 
+                                   Margin="0,0,15,0"></Label>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Text="&#xe600; 新建清单                                 
+                    " TextColor="#4169E1" FontFamily="iconfont.ttf#" 
+                    BackgroundColor="Transparent"></Button>
+
+            <Button Text="&#xe615;" Grid.Column="1" FontSize="24" TextColor="#4169E1"
+                    FontFamily="iconfont.ttf#" BackgroundColor="Transparent"></Button>
+        </Grid>
+    </Grid>
+
+</ContentPage>
