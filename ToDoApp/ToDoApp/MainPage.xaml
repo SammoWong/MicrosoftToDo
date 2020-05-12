@@ -30,7 +30,7 @@
         </StackLayout>
 
         <ListView Grid.Row="1" RowHeight="40" ItemsSource="{Binding MenuModels}" 
-                  SelectionMode="None"
+                  ItemSelected="ListView_ItemSelected"
                   SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -54,7 +54,7 @@
         </ListView>
 
         <ListView Grid.Row="2" RowHeight="40" ItemsSource="{Binding MenuSubModels}" 
-                  SelectionMode="None"
+                  ItemSelected="ListViewSub_ItemSelected"
                   SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>

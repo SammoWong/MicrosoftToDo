@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:vc="clr-namespace:ToDoApp.Converter"
+             x:Class="ToDoApp.View.ItemDetailPage">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="排序依据" Order="Secondary" Priority="0"></ToolbarItem>
+        <ToolbarItem Text="将快捷方式添加到屏幕" Order="Secondary" Priority="0"></ToolbarItem>
+        <ToolbarItem Text="更改主题" Order="Secondary" Priority="0"></ToolbarItem>
+        <ToolbarItem Text="隐藏已完成的任务" Order="Secondary" Priority="0"></ToolbarItem>
+        <ToolbarItem Text="发送副本" Order="Secondary" Priority="0"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <vc:IconConverter x:Key="icc"/>
+        <vc:DecorStatusConverter x:Key="dsc"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <Grid x:Name="grid">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <ListView Grid.RowSpan="2" RowHeight="40" HasUnevenRows="True" ItemsSource="{Binding TaskInfos}" 
+                  ItemSelected="ListView_ItemSelected"
+                  BackgroundColor="Transparent"
+                  SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <SwipeView Margin="8,4,8,0">
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Left" BackgroundColor="Blue"/>
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+                                
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Right" BackgroundColor="Red"/>
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                
+                                <Grid VerticalOptions="Center" BackgroundColor="White">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Text="{Binding IsDeleted,Converter={StaticResource icc},ConverterParameter='L'}" 
+                                            BackgroundColor="Transparent" 
+                                            Command="{Binding Source={x:Reference grid},Path=BindingContext.ExcludeCommand}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="22" FontFamily="iconfont.ttf#" />
+
+                                    <StackLayout Grid.Column="1">
+                                        <Label Text="{Binding Content}" TextColor="Black" 
+                                                TextDecorations="{Binding IsDeleted,Converter={StaticResource dsc}}" />
+                                        <Label Text="任务"/>
+                                    </StackLayout>
+
+                                    <Button Grid.Column="2" BackgroundColor="Transparent" FontSize="22" 
+                                            Text="{Binding IsFavorite,Converter={StaticResource icc},ConverterParameter='R'}" 
+                                            FontFamily="iconfont.ttf#"
+                                            Command="{Binding Source={x:Reference grid},Path=BindingContext.FavoriteCommand}"
+                                            CommandParameter="{Binding}" />
+                                </Grid>
+                            </SwipeView>
+                            <!--<Grid VerticalOptions="Center" BackgroundColor="White" Margin="8,4,8,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Text="{Binding IsDeleted,Converter={StaticResource icc},ConverterParameter='L'}" 
+                                            BackgroundColor="Transparent" 
+                                            Command="{Binding Source={x:Reference grid},Path=BindingContext.ExcludeCommand}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="22" FontFamily="iconfont.ttf#" />
+
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="{Binding Content}" TextColor="Black" 
+                                               TextDecorations="{Binding IsDeleted,Converter={StaticResource isc}}" />
+                                    <Label Text="任务"/>
+                                </StackLayout>
+
+                                <Button Grid.Column="2" BackgroundColor="Transparent" FontSize="22" 
+                                            Text="{Binding IsFavorite,Converter={StaticResource icc},ConverterParameter='R'}" 
+                                            FontFamily="iconfont.ttf#"
+                                            Command="{Binding Source={x:Reference grid},Path=BindingContext.FavoriteCommand}"
+                                            CommandParameter="{Binding}" />
+                            </Grid>-->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout x:Name="xlayout" Grid.Row="1" Orientation="Horizontal" BackgroundColor="White">
+                <Button BackgroundColor="Transparent" WidthRequest="45" HorizontalOptions="Start"
+                        FontSize="24" TextColor="DarkGray" FontFamily="iconfont.ttf#" Text="&#xe80c;"/>
+                
+                <Editor x:Name="xEdit" HorizontalOptions="FillAndExpand" Placeholder="添加任务"/>
+                
+                <Button WidthRequest="45" HorizontalOptions="End" Margin="8"
+                        FontSize="24" TextColor="White" FontFamily="iconfont.ttf#" Text="&#xe62e;"/>
+            </StackLayout>
+
+            <Button x:Name="btnAdd" Grid.Row="1" Text="&#xe600;" FontFamily="iconfont.ttf#" FontSize="20" 
+                    CornerRadius="30" BackgroundColor="#D1EEEE"
+                    HorizontalOptions="EndAndExpand" WidthRequest="40" Margin="0,0,10,10"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
