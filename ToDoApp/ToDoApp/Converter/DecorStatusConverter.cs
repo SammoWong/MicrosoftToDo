@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace ToDoApp.Converter
 {
-    public class IDecorStatusConverter : IValueConverter
+    public class DecorStatusConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
