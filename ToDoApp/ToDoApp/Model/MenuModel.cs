@@ -6,6 +6,7 @@ using System.Text;
 
 namespace ToDoApp.Model
 {
+    //单项
     public class MenuModel : ViewModelBase
     {
         public string IconFont { get; set; }
@@ -36,10 +37,20 @@ namespace ToDoApp.Model
             set { isDeleted = value; RaisePropertyChanged(); }
         }
         //收藏
-        public bool IsFavorite 
+        public bool IsFavorite
         {
             get { return isFavorite; }
             set { isFavorite = value; RaisePropertyChanged(); }
         }
+    }
+
+    public class MenuGroup : List<MenuModel>
+    {
+        public MenuGroup(string name, List<MenuModel> models) : base(models)
+        {
+            this.name = name;
+        }
+
+        public string name { get; private set; }
     }
 }

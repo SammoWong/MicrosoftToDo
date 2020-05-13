@@ -29,54 +29,32 @@
                     HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" WidthRequest="50" Margin="0,0,5,0"></Button>
         </StackLayout>
 
-        <ListView Grid.Row="1" RowHeight="40" ItemsSource="{Binding MenuModels}" 
-                  ItemSelected="ListView_ItemSelected"
-                  SeparatorVisibility="None">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid VerticalOptions="Center">
+        <StackLayout Grid.Row="1" VerticalOptions="FillAndExpand">
+            <CollectionView Grid.Row="1" ItemsSource="{Binding MenuModels}" 
+                BackgroundColor="Transparent" IsGrouped="True"
+                SelectionMode="Single"
+                SelectionChanged="CollectionView_SelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid VerticalOptions="Center" Margin="5,0,0,0" HeightRequest="40">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding IconFont}" TextColor="{Binding BackColor}" Margin="5" VerticalOptions="Center" FontFamily="iconfont.ttf#" FontSize="22" FontAttributes="Bold"></Label>
-                                <Label Text="{Binding Title}" FontAttributes="Bold" VerticalOptions="Center"></Label>
+                                <Label Text="{Binding IconFont}" TextColor="{Binding BackColor}" Margin="5" 
+                                       VerticalOptions="Center" FontFamily="iconfont.ttf#" FontSize="22" FontAttributes="Bold" />
+                                <Label Text="{Binding Title}" FontAttributes="Bold" VerticalOptions="Center" />
                             </StackLayout>
                             <Label Grid.Column="1" Text="{Binding TaskInfos.Count, Converter={StaticResource vdc}}" HorizontalOptions="EndAndExpand" 
-                                   Margin="0,0,15,0"></Label>
+                                   Margin="0,0,15,0" VerticalOptions="Center" />
                         </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <ListView Grid.Row="2" RowHeight="40" ItemsSource="{Binding MenuSubModels}" 
-                  ItemSelected="ListViewSub_ItemSelected"
-                  SeparatorVisibility="None">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid VerticalOptions="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="&#xe63b;" Margin="5" VerticalOptions="Center" FontFamily="iconfont.ttf#" FontSize="22" FontAttributes="Bold"></Label>
-                                <Label Text="{Binding Title}" FontAttributes="Bold" VerticalOptions="Center"></Label>
-                            </StackLayout>
-                            <Label Grid.Column="1" Text="{Binding TaskInfos.Count, Converter={StaticResource vdc}}" HorizontalOptions="EndAndExpand" 
-                                   Margin="0,0,15,0"></Label>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+        
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

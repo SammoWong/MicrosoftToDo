@@ -60,6 +60,7 @@
                                             BackgroundColor="Transparent" 
                                             Command="{Binding Source={x:Reference grid},Path=BindingContext.ExcludeCommand}"
                                             CommandParameter="{Binding}"
+                                            TextColor="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BackgroundColor}"
                                             FontSize="22" FontFamily="iconfont.ttf#" />
 
                                     <StackLayout Grid.Column="1">
@@ -71,10 +72,12 @@
                                     <Button Grid.Column="2" BackgroundColor="Transparent" FontSize="22" 
                                             Text="{Binding IsFavorite,Converter={StaticResource icc},ConverterParameter='R'}" 
                                             FontFamily="iconfont.ttf#"
+                                            TextColor="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BackgroundColor}"
                                             Command="{Binding Source={x:Reference grid},Path=BindingContext.FavoriteCommand}"
                                             CommandParameter="{Binding}" />
                                 </Grid>
                             </SwipeView>
+                            
                             <!--<Grid VerticalOptions="Center" BackgroundColor="White" Margin="8,4,8,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"/>
@@ -86,20 +89,23 @@
                                             BackgroundColor="Transparent" 
                                             Command="{Binding Source={x:Reference grid},Path=BindingContext.ExcludeCommand}"
                                             CommandParameter="{Binding}"
+                                            TextColor="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BackgroundColor}"
                                             FontSize="22" FontFamily="iconfont.ttf#" />
 
                                 <StackLayout Grid.Column="1">
                                     <Label Text="{Binding Content}" TextColor="Black" 
-                                               TextDecorations="{Binding IsDeleted,Converter={StaticResource isc}}" />
+                                               TextDecorations="{Binding IsDeleted,Converter={StaticResource dsc}}" />
                                     <Label Text="任务"/>
                                 </StackLayout>
 
                                 <Button Grid.Column="2" BackgroundColor="Transparent" FontSize="22" 
                                             Text="{Binding IsFavorite,Converter={StaticResource icc},ConverterParameter='R'}" 
                                             FontFamily="iconfont.ttf#"
+                                            TextColor="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BackgroundColor}"
                                             Command="{Binding Source={x:Reference grid},Path=BindingContext.FavoriteCommand}"
                                             CommandParameter="{Binding}" />
                             </Grid>-->
+                            
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -11,33 +11,32 @@ namespace ToDoApp.ViewModel
     {
         public MainViewModel()
         {
-            menuModels = new ObservableCollection<MenuModel>();
-            menuModels.Add(new MenuModel { IconFont = "\xe635", Title = "我的一天", BackColor = "#218868" });
-            menuModels.Add(new MenuModel { IconFont = "\xe6b6", Title = "重要", BackColor = "#EE3B3B" });
-            menuModels.Add(new MenuModel { IconFont = "\xe6e1", Title = "已计划日程", BackColor = "#218868" });
-            menuModels.Add(new MenuModel { IconFont = "\xe614", Title = "已分配给我", BackColor = "#EE3B3B" });
-            menuModels.Add(new MenuModel { IconFont = "\xe755", Title = "任务", BackColor = "#218868" });
+            MenuModels = new ObservableCollection<MenuGroup>();
 
-            menuSubModels = new ObservableCollection<MenuModel>();
-            menuSubModels.Add(new MenuModel { Title = "购物清单" });
-            menuSubModels.Add(new MenuModel { Title = "杂货清单" });
-            menuSubModels.Add(new MenuModel { Title = "待办事项" });
+            MenuModels.Add(new MenuGroup("", new List<MenuModel>
+            {
+                new MenuModel { IconFont = "\xe635", Title = "我的一天", BackColor = "#218868" },
+                new MenuModel { IconFont = "\xe6b6", Title = "重要", BackColor = "#EE3B3B" },
+                new MenuModel { IconFont = "\xe6e1", Title = "已计划日程", BackColor = "#218868" },
+                new MenuModel { IconFont = "\xe614", Title = "已分配给我", BackColor = "#EE3B3B" },
+                new MenuModel { IconFont = "\xe755", Title = "任务", BackColor = "#218868" }
+            }));
+
+            MenuModels.Add(new MenuGroup("", new List<MenuModel>
+            {
+                new MenuModel { IconFont = "\xe63b", Title = "购物清单",BackColor="#009ACD" },
+                new MenuModel { IconFont = "\xe63b", Title = "杂货清单",BackColor="#009ACD" },
+                new MenuModel { IconFont = "\xe63b", Title = "待办事项",BackColor="#009ACD" }
+            }));
+
         }
 
-        private ObservableCollection<MenuModel> menuModels;
+        private ObservableCollection<MenuGroup> menuModels;
 
-        public ObservableCollection<MenuModel> MenuModels
+        public ObservableCollection<MenuGroup> MenuModels
         {
             get { return menuModels; }
             set { menuModels = value; RaisePropertyChanged(); }
-        }
-
-        private ObservableCollection<MenuModel> menuSubModels;
-
-        public ObservableCollection<MenuModel> MenuSubModels
-        {
-            get { return menuSubModels; }
-            set { menuSubModels = value; RaisePropertyChanged(); }
         }
     }
 }

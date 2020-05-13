@@ -14,10 +14,10 @@ namespace ToDoApp.ViewModel
         public ItemDetailViewModel(ObservableCollection<TaskInfo> taskInfos)
         {
             this.TaskInfos = taskInfos;
-            this.TaskInfos = new ObservableCollection<TaskInfo>();
-            TaskInfos.Add(new TaskInfo { Content = "ObservableCollection" });
-            TaskInfos.Add(new TaskInfo { Content = "ObservableCollection" });
-            TaskInfos.Add(new TaskInfo { Content = "ObservableCollection" });
+            //this.TaskInfos = new ObservableCollection<TaskInfo>();
+            //TaskInfos.Add(new TaskInfo { Content = "ObservableCollection" });
+            //TaskInfos.Add(new TaskInfo { Content = "ObservableCollection" });
+            //TaskInfos.Add(new TaskInfo { Content = "ObservableCollection" });
 
 
             ExcludeCommand = new RelayCommand<TaskInfo>(arg =>

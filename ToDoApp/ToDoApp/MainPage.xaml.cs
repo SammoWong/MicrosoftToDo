@@ -23,9 +23,9 @@ namespace ToDoApp
             this.BindingContext = new MainViewModel();
         }
 
-        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListView lv = sender as ListView;
+            CollectionView lv = sender as CollectionView;
             MenuModel m = lv?.SelectedItem as MenuModel;
             if (m == null)
                 return;
@@ -38,12 +38,6 @@ namespace ToDoApp
                 BindingContext = new ItemDetailViewModel(m.TaskInfos),
                 BackgroundColor = Color.FromHex(m.BackColor)
             });
-            lv.SelectedItem = null;
-        }
-
-        private void ListViewSub_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            ListView lv = sender as ListView;
             lv.SelectedItem = null;
         }
     }
