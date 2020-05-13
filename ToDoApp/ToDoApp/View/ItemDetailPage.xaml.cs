@@ -26,10 +26,11 @@ namespace ToDoApp.View
             btnAdd.IsVisible = true;
         }
 
-        private void BtnAdd_Clicked(object sender, EventArgs e)
+        private async void BtnAdd_Clicked(object sender, EventArgs e)
         {
             btnAdd.IsVisible = false;
             xlayout.IsVisible = true;
+            await Task.Delay(200);
             xEdit.Focus();
         }
 
