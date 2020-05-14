@@ -30,8 +30,8 @@
         </StackLayout>
 
         <StackLayout Grid.Row="1" VerticalOptions="FillAndExpand">
-            <CollectionView Grid.Row="1" ItemsSource="{Binding MenuModels}" 
-                BackgroundColor="Transparent" IsGrouped="True"
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Checklists}" 
+                BackgroundColor="Transparent"
                 SelectionMode="Single"
                 SelectionChanged="CollectionView_SelectionChanged">
                 <CollectionView.ItemTemplate>
@@ -47,7 +47,7 @@
                                        VerticalOptions="Center" FontFamily="iconfont.ttf#" FontSize="22" FontAttributes="Bold" />
                                 <Label Text="{Binding Title}" FontAttributes="Bold" VerticalOptions="Center" />
                             </StackLayout>
-                            <Label Grid.Column="1" Text="{Binding TaskInfos.Count, Converter={StaticResource vdc}}" HorizontalOptions="EndAndExpand" 
+                            <Label Grid.Column="1" Text="{Binding Count, Converter={StaticResource vdc}}" HorizontalOptions="EndAndExpand" 
                                    Margin="0,0,15,0" VerticalOptions="Center" />
                         </Grid>
                     </DataTemplate>
