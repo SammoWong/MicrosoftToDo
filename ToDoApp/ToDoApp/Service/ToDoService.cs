@@ -40,10 +40,16 @@ namespace ToDoApp.Service
             return true;
         }
 
-        public async Task<List<ChecklistDetail>> GetToDoListDetailAsync(string id)
+        public async Task<SingleChecklist> GetToDoListDetailAsync(string id)
         {
-            var res = await App.Instance.ChecklistDetails.Where(t => t.ChecklistId == id).ToListAsync();
-            return res;
+            var res = await App.Instance.Checklists.FirstOrDefaultAsync(t => t.Id == id);
+            var data = await App.Instance.ChecklistDetails.Where(t => t.ChecklistId == id).ToListAsync();
+
+            return new SingleChecklist
+            {
+                Checklist = res,
+                ChecklistDetails = new System.Collections.ObjectModel.ObservableCollection<ChecklistDetail>(data)
+            };
         }
 
         public async Task<List<Checklist>> GetToDoListAsync()

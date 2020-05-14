@@ -30,10 +30,11 @@
         </StackLayout>
 
         <StackLayout Grid.Row="1" VerticalOptions="FillAndExpand">
-            <CollectionView Grid.Row="1" ItemsSource="{Binding Checklists}" 
+            <CollectionView x:Name="collView" ItemsSource="{Binding Checklists}" 
                 BackgroundColor="Transparent"
                 SelectionMode="Single"
-                SelectionChanged="CollectionView_SelectionChanged">
+                SelectionChangedCommand="{Binding OpenCommand}" 
+                SelectionChangedCommandParameter="{Binding Source={x:Reference collView},Path=SelectedItem}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid VerticalOptions="Center" Margin="5,0,0,0" HeightRequest="40">
@@ -54,7 +55,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </StackLayout>
-        
+
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

@@ -27,7 +27,7 @@
                 <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ListView Grid.RowSpan="2" RowHeight="40" HasUnevenRows="True" ItemsSource="{Binding TaskInfos}" 
+            <ListView Grid.RowSpan="2" RowHeight="40" HasUnevenRows="True" ItemsSource="{Binding SingleChecklist.ChecklistDetails}" 
                   ItemSelected="ListView_ItemSelected"
                   BackgroundColor="Transparent"
                   SeparatorVisibility="None">

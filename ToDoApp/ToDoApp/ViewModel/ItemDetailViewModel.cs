@@ -11,11 +11,11 @@ namespace ToDoApp.ViewModel
 {
     public class ItemDetailViewModel : ViewModelBase
     {
-        public ItemDetailViewModel(ObservableCollection<TaskInfo> taskInfos)
+        public ItemDetailViewModel(SingleChecklist checklist)
         {
-            this.TaskInfos = taskInfos;
+            this.SingleChecklist = checklist;
 
-            ExcludeCommand = new RelayCommand<TaskInfo>(arg =>
+            ExcludeCommand = new RelayCommand<ChecklistDetail>(arg =>
             {
                 if (arg.IsDeleted)
                     arg.IsDeleted = false;
@@ -23,21 +23,20 @@ namespace ToDoApp.ViewModel
                     arg.IsDeleted = true;
             });
 
-            FavoriteCommand = new RelayCommand<TaskInfo>(arg =>
+            FavoriteCommand = new RelayCommand<ChecklistDetail>(arg =>
             {
                 arg.IsFavorite = !arg.IsFavorite;
             });
 
             AddCommand = new RelayCommand(AddTask);
-            DeleteCommand = new RelayCommand<TaskInfo>(t => DeleteTask(t));
+            DeleteCommand = new RelayCommand<ChecklistDetail>(t => DeleteTask(t));
         }
 
-        private ObservableCollection<TaskInfo> taskInfos = new ObservableCollection<TaskInfo>();
-
-        public ObservableCollection<TaskInfo> TaskInfos
+        private SingleChecklist singleChecklist;
+        public SingleChecklist SingleChecklist
         {
-            get { return taskInfos; }
-            set { taskInfos = value; RaisePropertyChanged(); }
+            get { return singleChecklist; }
+            set { singleChecklist = value; RaisePropertyChanged(); }
         }
 
         private string content = string.Empty;
@@ -47,26 +46,26 @@ namespace ToDoApp.ViewModel
             set { content = value; RaisePropertyChanged(); }
         }
 
-        public RelayCommand<TaskInfo> ExcludeCommand { get; set; }
-        public RelayCommand<TaskInfo> FavoriteCommand { get; set; }
+        public RelayCommand<ChecklistDetail> ExcludeCommand { get; set; }
+        public RelayCommand<ChecklistDetail> FavoriteCommand { get; set; }
 
         //新增
         public RelayCommand AddCommand { get; set; }
         //删除
-        public RelayCommand<TaskInfo> DeleteCommand { get; set; }
+        public RelayCommand<ChecklistDetail> DeleteCommand { get; set; }
 
         public void AddTask()
         {
             if (string.IsNullOrWhiteSpace(Content))
                 return;
 
-            TaskInfos.Add(new TaskInfo { Content = Content });
+            SingleChecklist.ChecklistDetails.Add(new ChecklistDetail { Content = Content });
             Content = string.Empty;
         }
 
-        public void DeleteTask(TaskInfo taskInfo)
+        public void DeleteTask(ChecklistDetail taskInfo)
         {
-            taskInfos.Remove(taskInfo);
+            SingleChecklist.ChecklistDetails.Remove(taskInfo);
         }
     }
 }

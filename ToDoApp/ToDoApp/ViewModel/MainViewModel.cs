@@ -1,8 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using ToDoApp.Core;
 using ToDoApp.Interfaces;
 using ToDoApp.Model;
@@ -15,18 +18,17 @@ namespace ToDoApp.ViewModel
         public MainViewModel()
         {
             _toDoService = ServiceProvider.Instance.Get<IToDoService>();
+            OpenCommand = new RelayCommand<Checklist>(t => OpenPage(t));
+            InitMainViewModel();
+        }
 
-            Checklists = new ObservableCollection<Checklist>
+        private async void OpenPage(Checklist t)
+        {
+            if (t != null)
             {
-                new Checklist{IconFont = "\xe635", Title = "我的一天", BackColor = "#218868"},
-                new Checklist{IconFont = "\xe6b6", Title = "重要", BackColor = "#EE3B3B"},
-                new Checklist{IconFont = "\xe6e1", Title = "已计划日程", BackColor = "#218868"},
-                new Checklist{IconFont = "\xe614", Title = "已分配给我", BackColor = "#EE3B3B"},
-                new Checklist{IconFont = "\xe755", Title = "任务", BackColor = "#218868"},
-                new Checklist{IconFont = "\xe63b", Title = "购物清单",BackColor="#009ACD"},
-                new Checklist{IconFont = "\xe63b", Title = "杂货清单",BackColor="#009ACD"},
-                new Checklist{IconFont = "\xe63b", Title = "待办事项",BackColor="#009ACD"},
-            };
+                var res = await _toDoService.GetToDoListDetailAsync(t.Id);
+                Messenger.Default.Send(res, "OpenDetailPage");
+            }
         }
 
         private ObservableCollection<Checklist> checklists;
@@ -36,5 +38,20 @@ namespace ToDoApp.ViewModel
             get { return checklists; }
             set { checklists = value; RaisePropertyChanged(); }
         }
+
+        public async void InitMainViewModel()
+        {
+            var res = await _toDoService.GetToDoListAsync();
+            if (res != null)
+            {
+                Checklists = new ObservableCollection<Checklist>();
+                res.ForEach(a =>
+                {
+                    Checklists.Add(a);
+                });
+            }
+        }
+
+        public RelayCommand<Checklist> OpenCommand { get; set; }
     }
 }

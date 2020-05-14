@@ -18,7 +18,7 @@ namespace ToDoApp.Interfaces
         /// 获取清单明细数据列表
         /// </summary>
         /// <returns></returns>
-        Task<List<ChecklistDetail>> GetToDoListDetailAsync(string id);
+        Task<SingleChecklist> GetToDoListDetailAsync(string id);
 
         /// <summary>
         /// 添加首页清单
