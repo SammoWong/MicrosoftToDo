@@ -18,7 +18,7 @@ namespace ToDoApp.Interfaces
         /// 获取清单明细数据列表
         /// </summary>
         /// <returns></returns>
-        Task<List<ChecklistDetail>> GetToDoChecklistDetailAsync();
+        Task<List<ChecklistDetail>> GetToDoListDetailAsync(string id);
 
         /// <summary>
         /// 添加首页清单
@@ -32,7 +32,14 @@ namespace ToDoApp.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<bool> DeleteToDoGroupAsync(string id);
+        Task<bool> DeleteToDoGroupByIdAsync(string id);
+
+        /// <summary>
+        /// 删除明细
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<bool> DeleteToDoInfoByIdAsync(string id);
 
         /// <summary>
         /// 更新首页清单名称

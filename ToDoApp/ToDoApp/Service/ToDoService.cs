@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ToDoApp.Interfaces;
@@ -9,44 +11,99 @@ namespace ToDoApp.Service
 {
     public class ToDoService : IToDoService
     {
-        public Task<bool> AddToDoDetailAsync(string id, ChecklistDetail detail)
+        public async Task<bool> AddToDoDetailAsync(string id, ChecklistDetail detail)
         {
-            throw new NotImplementedException();
+            var res = await App.Instance.Checklists.FirstOrDefaultAsync(t => t.Id == id);
+            if(res != null)
+            {
+                detail.ChecklistId = res.Id;
+                await App.Instance.ChecklistDetails.AddAsync(detail);
+                return await App.Instance.SaveChangesAsync() > 0;
+            }
+            return false;
         }
 
-        public Task<bool> AddToDoGroupAsync(Checklist checklist)
+        public async Task<bool> AddToDoGroupAsync(Checklist checklist)
         {
-            throw new NotImplementedException();
+            await App.Instance.Checklists.AddAsync(checklist);
+            return await App.Instance.SaveChangesAsync() > 0;
         }
 
-        public Task<bool> DeleteToDoGroupAsync(string id)
+        public async Task<bool> DeleteToDoGroupByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var res = await App.Instance.Checklists.FirstOrDefaultAsync(t => t.Id == id);
+            if(res != null)
+            {
+                App.Instance.Checklists.Remove(res);
+                return await App.Instance.SaveChangesAsync() > 0;
+            }
+            return true;
         }
 
-        public Task<List<ChecklistDetail>> GetToDoChecklistDetailAsync()
+        public async Task<List<ChecklistDetail>> GetToDoListDetailAsync(string id)
         {
-            throw new NotImplementedException();
+            var res = await App.Instance.ChecklistDetails.Where(t => t.ChecklistId == id).ToListAsync();
+            return res;
         }
 
-        public Task<List<Checklist>> GetToDoListAsync()
+        public async Task<List<Checklist>> GetToDoListAsync()
         {
-            throw new NotImplementedException();
+            var res = await App.Instance.Checklists.ToListAsync();
+            res.ForEach(async a =>
+            {
+                a.Count = await App.Instance.ChecklistDetails.CountAsync(c => c.ChecklistId == a.Id && !c.IsDeleted);
+            });
+            return res;
         }
 
-        public Task<bool> UpdateDeleteStatus(string id, bool status)
+        public async Task<bool> UpdateDeleteStatus(string id, bool status)
         {
-            throw new NotImplementedException();
+            var res = await App.Instance.ChecklistDetails.FirstOrDefaultAsync(t => t.Id == id);
+            if(res != null)
+            {
+                res.IsDeleted = status;
+                App.Instance.Entry(res).State = EntityState.Modified;
+                return await App.Instance.SaveChangesAsync() > 0;
+            }
+
+            return true;
         }
 
-        public Task<bool> UpdateFavoriteStatus(string id, bool status)
+        public async Task<bool> UpdateFavoriteStatus(string id, bool status)
         {
-            throw new NotImplementedException();
+            var res = await App.Instance.ChecklistDetails.FirstOrDefaultAsync(t => t.Id == id);
+            if (res != null)
+            {
+                res.IsFavorite = status;
+                App.Instance.Entry(res).State = EntityState.Modified;
+                return await App.Instance.SaveChangesAsync() > 0;
+            }
+
+            return true;
         }
 
-        public Task<bool> UpdateToDoGroupNameAsync(string id, string name)
+        public async Task<bool> UpdateToDoGroupNameAsync(string id, string name)
         {
-            throw new NotImplementedException();
+            var res = await App.Instance.Checklists.FirstOrDefaultAsync(t => t.Id == id);
+            if (res != null)
+            {
+                res.Title = name;
+                App.Instance.Entry(res).State = EntityState.Modified;
+                return await App.Instance.SaveChangesAsync() > 0;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> DeleteToDoInfoByIdAsync(string id)
+        {
+            var res = await App.Instance.ChecklistDetails.FirstOrDefaultAsync(t => t.Id == id);
+            if(res != null)
+            {
+                App.Instance.ChecklistDetails.Remove(res);
+                return await App.Instance.SaveChangesAsync() > 0;
+            }
+            return true;
         }
     }
 }
