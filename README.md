@@ -1,6 +1,7 @@
 # MicrosoftToDo
-基于Xamarin的Microsoft ToDo
 
-### 运行截图	
+鍩轰簬Xamarin鐨凪icrosoft ToDo
 
-(https://github.com/SammoWong/MicrosoftToDo/blob/master/ToDoApp/ToDoApp/bg.png)
+### 杩愯鎴浘	
+
+![image](https://github.com/SammoWong/MicrosoftToDo/blob/master/ToDoApp/ToDoApp/bg.png)
