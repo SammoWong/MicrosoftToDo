@@ -40,5 +40,15 @@ namespace ToDoApp.View
             ListView lv = sender as ListView;
             lv.SelectedItem = null;
         }
+
+        private void btnUpdateClicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDeleteClicked(object sender, EventArgs e)
+        {
+
+        }
     }
 }

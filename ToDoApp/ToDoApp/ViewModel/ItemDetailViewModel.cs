@@ -6,27 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using ToDoApp.Model;
 using GalaSoft.MvvmLight.Command;
+using ToDoApp.Interfaces;
+using ToDoApp.Core;
 
 namespace ToDoApp.ViewModel
 {
     public class ItemDetailViewModel : ViewModelBase
     {
+        private readonly IToDoService _toDoService;
+
         public ItemDetailViewModel(SingleChecklist checklist)
         {
+            _toDoService = ServiceProvider.Instance.Get<IToDoService>();
             this.SingleChecklist = checklist;
 
-            ExcludeCommand = new RelayCommand<ChecklistDetail>(arg =>
-            {
-                if (arg.IsDeleted)
-                    arg.IsDeleted = false;
-                else
-                    arg.IsDeleted = true;
-            });
+            ExcludeCommand = new RelayCommand<ChecklistDetail>(t => { UpdateDeleteStatus(t); });
 
-            FavoriteCommand = new RelayCommand<ChecklistDetail>(arg =>
-            {
-                arg.IsFavorite = !arg.IsFavorite;
-            });
+            FavoriteCommand = new RelayCommand<ChecklistDetail>(t => { UpdateFavoriteStatus(t); });
 
             AddCommand = new RelayCommand(AddTask);
             DeleteCommand = new RelayCommand<ChecklistDetail>(t => DeleteTask(t));
@@ -54,18 +50,36 @@ namespace ToDoApp.ViewModel
         //删除
         public RelayCommand<ChecklistDetail> DeleteCommand { get; set; }
 
-        public void AddTask()
+        public async void AddTask()
         {
             if (string.IsNullOrWhiteSpace(Content))
                 return;
-
-            SingleChecklist.ChecklistDetails.Add(new ChecklistDetail { Content = Content });
-            Content = string.Empty;
+            ChecklistDetail detail = new ChecklistDetail();
+            detail.Id = Guid.NewGuid().ToString();
+            detail.Content = Content;
+            var result = await _toDoService.AddToDoDetailAsync(SingleChecklist.Checklist.Id, detail);
+            if (result)
+            {
+                SingleChecklist.ChecklistDetails.Add(new ChecklistDetail { Content = Content });
+                Content = string.Empty;
+            }
         }
 
-        public void DeleteTask(ChecklistDetail taskInfo)
+        public async void DeleteTask(ChecklistDetail taskInfo)
         {
-            SingleChecklist.ChecklistDetails.Remove(taskInfo);
+            var result = await _toDoService.DeleteToDoInfoByIdAsync(taskInfo.Id);
+            if (result)
+                SingleChecklist.ChecklistDetails.Remove(taskInfo);
+        }
+
+        public async void UpdateDeleteStatus(ChecklistDetail detail)
+        {
+            await _toDoService.UpdateDeleteStatus(detail.Id, !detail.IsDeleted);
+        }
+        public async void UpdateFavoriteStatus(ChecklistDetail detail)
+        {
+            await _toDoService.UpdateFavoriteStatus(detail.Id, !detail.IsFavorite);
+
         }
     }
 }
