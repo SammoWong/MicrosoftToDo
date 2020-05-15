@@ -1,6 +1,8 @@
 ﻿
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
+using Android.Content.Res;
 using Android.OS;
 using Android.Runtime;
 using Plugin.CurrentActivity;
@@ -21,6 +23,16 @@ namespace ToDoApp.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
+
+        protected override void AttachBaseContext(Context @base)
+        {
+            Configuration configuration = new Configuration();
+            configuration = @base.Resources.Configuration;
+            configuration.FontScale = 1.00f;
+            Context context = @base.CreateConfigurationContext(configuration);
+            base.AttachBaseContext(context);
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
