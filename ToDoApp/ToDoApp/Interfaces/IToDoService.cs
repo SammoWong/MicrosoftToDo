@@ -21,6 +21,13 @@ namespace ToDoApp.Interfaces
         Task<SingleChecklist> GetToDoListDetailAsync(string id);
 
         /// <summary>
+        /// 根据内容搜索结果
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        Task<List<ChecklistDetail>> GetTodoDetailByTextAsync(string text);
+
+        /// <summary>
         /// 添加首页清单
         /// </summary>
         /// <param name="checklist"></param>

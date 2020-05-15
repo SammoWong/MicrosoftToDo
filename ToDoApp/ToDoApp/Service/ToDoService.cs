@@ -111,5 +111,12 @@ namespace ToDoApp.Service
             }
             return true;
         }
+
+        public async Task<List<ChecklistDetail>> GetTodoDetailByTextAsync(string text)
+        {
+            var res = await App.Instance.ChecklistDetails.Where(t => t.Content.Contains(text)).ToListAsync();
+            
+            return res;
+        }
     }
 }

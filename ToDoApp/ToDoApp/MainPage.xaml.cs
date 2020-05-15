@@ -31,7 +31,8 @@ namespace ToDoApp
 
         private void Query(string obj)
         {
-            throw new NotImplementedException();
+            ItemQueryViewModel viewModel = new ItemQueryViewModel(new SingleChecklist());
+            Navigation.PushAsync(new ItemQueryPage { BindingContext = viewModel });
         }
 
         private async void Add(string obj)

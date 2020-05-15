@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:vc="clr-namespace:ToDoApp.Converter"
+             x:Class="ToDoApp.View.ItemQueryPage">
+
+    <ContentPage.Resources>
+        <vc:IconConverter x:Key="icc"/>
+        <vc:DecorStatusConverter x:Key="dsc"/>
+    </ContentPage.Resources>
+    
+    
+    <ContentPage.Content>
+        <ListView Grid.RowSpan="2" RowHeight="40" HasUnevenRows="True" ItemsSource="{Binding SingleChecklist.ChecklistDetails}" 
+                  BackgroundColor="Transparent"
+                  SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <SwipeView Margin="8,4,8,0">
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Left" BackgroundColor="Blue"/>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Remove" BackgroundColor="Red" 
+                                            Command="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.DeleteCommand}"
+                                            CommandParameter="{Binding}"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Grid VerticalOptions="Center" BackgroundColor="White">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Text="{Binding IsDeleted,Converter={StaticResource icc},ConverterParameter='L'}" 
+                                            BackgroundColor="Transparent" 
+                                            Command="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.ExcludeCommand}"
+                                            CommandParameter="{Binding}"
+                                            TextColor="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BackgroundColor}"
+                                            FontSize="22" FontFamily="iconfont.ttf#" />
+
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="{Binding Content}" TextColor="Black" 
+                                                TextDecorations="{Binding IsDeleted,Converter={StaticResource dsc}}" />
+                                    <Label Text="任务"/>
+                                </StackLayout>
+
+                                <Button Grid.Column="2" BackgroundColor="Transparent" FontSize="22" 
+                                            Text="{Binding IsFavorite,Converter={StaticResource icc},ConverterParameter='R'}" 
+                                            FontFamily="iconfont.ttf#"
+                                            TextColor="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BackgroundColor}"
+                                            Command="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BindingContext.FavoriteCommand}"
+                                            CommandParameter="{Binding}" />
+                            </Grid>
+                        </SwipeView>
+
+                        <!--<Grid VerticalOptions="Center" BackgroundColor="White" Margin="8,4,8,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button Text="{Binding IsDeleted,Converter={StaticResource icc},ConverterParameter='L'}" 
+                                            BackgroundColor="Transparent" 
+                                            Command="{Binding Source={x:Reference grid},Path=BindingContext.ExcludeCommand}"
+                                            CommandParameter="{Binding}"
+                                            TextColor="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BackgroundColor}"
+                                            FontSize="22" FontFamily="iconfont.ttf#" />
+
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="{Binding Content}" TextColor="Black" 
+                                               TextDecorations="{Binding IsDeleted,Converter={StaticResource dsc}}" />
+                                    <Label Text="任务"/>
+                                </StackLayout>
+
+                                <Button Grid.Column="2" BackgroundColor="Transparent" FontSize="22" 
+                                            Text="{Binding IsFavorite,Converter={StaticResource icc},ConverterParameter='R'}" 
+                                            FontFamily="iconfont.ttf#"
+                                            TextColor="{Binding Source={x:RelativeSource AncestorType={x:Type ContentPage}},Path=BackgroundColor}"
+                                            Command="{Binding Source={x:Reference grid},Path=BindingContext.FavoriteCommand}"
+                                            CommandParameter="{Binding}" />
+                            </Grid>-->
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>
