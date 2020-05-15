@@ -81,5 +81,15 @@ namespace ToDoApp.ViewModel
             await _toDoService.UpdateFavoriteStatus(detail.Id, !detail.IsFavorite);
 
         }
+
+        public async Task<bool> UpdateName(string name)
+        {
+            return await _toDoService.UpdateToDoGroupNameAsync(SingleChecklist.Checklist.Id, name);
+        }
+
+        public async Task<bool> DeleteChecklist()
+        {
+            return await _toDoService.DeleteToDoGroupByIdAsync(SingleChecklist.Checklist.Id);
+        }
     }
 }

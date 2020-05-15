@@ -17,12 +17,36 @@ namespace ToDoApp
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        MainViewModel viewModel;
         public MainPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new MainViewModel();
+            viewModel = new MainViewModel();
+            this.BindingContext = viewModel;
             Messenger.Default.Register<SingleChecklist>(this, "OpenDetailPage", OpenDetailPage);
+            Messenger.Default.Register<string>(this, "Add", Add);
+            Messenger.Default.Register<string>(this, "Query", Query);
+        }
+
+        private void Query(string obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void Add(string obj)
+        {
+            var result = await DisplayPromptAsync("", "请输入清单标题？");
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                viewModel.AddChecklist(new Checklist
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    IconFont = "\xe63b",
+                    Title = result,
+                    BackColor = "#009ACD"
+                });
+            }
         }
 
         private async void OpenDetailPage(SingleChecklist obj)
@@ -37,6 +61,11 @@ namespace ToDoApp
 
             await Task.Delay(100);
             collView.SelectedItem = null;
+        }
+
+        protected override void OnAppearing()
+        {
+            viewModel.InitMainViewModel();
         }
     }
 }

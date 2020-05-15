@@ -26,7 +26,8 @@
             </StackLayout>
 
             <Button Text="&#xe638;" FontFamily="iconfont.ttf#" FontSize="25" BackgroundColor="Transparent" TextColor="Blue" 
-                    HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" WidthRequest="50" Margin="0,0,5,0"></Button>
+                    Command="{Binding QueryCommand}"
+                    HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" WidthRequest="50" Margin="5,0,5,0"></Button>
         </StackLayout>
 
         <StackLayout Grid.Row="1" VerticalOptions="FillAndExpand">
@@ -57,17 +58,17 @@
         </StackLayout>
 
         <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="60"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>-->
 
-            <Button Text="&#xe600; 新建清单                                 
-                    " TextColor="#4169E1" FontFamily="iconfont.ttf#" 
-                    BackgroundColor="Transparent"></Button>
+            <Button Text="&#xe600; 新建清单" HorizontalOptions="Center" TextColor="#4169E1" FontFamily="iconfont.ttf#" 
+                    BackgroundColor="Transparent"
+                    Command="{Binding AddCommand}"></Button>
 
-            <Button Text="&#xe615;" Grid.Column="1" FontSize="24" TextColor="#4169E1"
-                    FontFamily="iconfont.ttf#" BackgroundColor="Transparent"></Button>
+            <!--<Button Text="&#xe615;" Grid.Column="1" FontSize="24" TextColor="#4169E1"
+                    FontFamily="iconfont.ttf#" BackgroundColor="Transparent"></Button>-->
         </Grid>
     </Grid>
 

@@ -19,7 +19,14 @@ namespace ToDoApp.ViewModel
         {
             _toDoService = ServiceProvider.Instance.Get<IToDoService>();
             OpenCommand = new RelayCommand<Checklist>(t => OpenPage(t));
-            InitMainViewModel();
+            AddCommand = new RelayCommand(() =>
+            {
+                Messenger.Default.Send("", "Add");
+            });
+            QueryCommand = new RelayCommand(() =>
+            {
+                Messenger.Default.Send("", "Query");
+            });
         }
 
         private async void OpenPage(Checklist t)
@@ -53,5 +60,13 @@ namespace ToDoApp.ViewModel
         }
 
         public RelayCommand<Checklist> OpenCommand { get; set; }
+        public RelayCommand AddCommand { get; set; }
+
+        public RelayCommand QueryCommand { get; set; }
+        public async void AddChecklist(Checklist checklist)
+        {
+            await _toDoService.AddToDoGroupAsync(checklist);
+            Checklists.Add(checklist);
+        }
     }
 }
